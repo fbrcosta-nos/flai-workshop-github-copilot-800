@@ -30,28 +30,56 @@ function Users() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading users...</p></div>;
-  if (error) return <div className="container mt-4"><p>Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container mt-4">
+      <div className="loading-spinner">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="mt-3">Loading users...</p>
+      </div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="container mt-4">
+      <div className="alert alert-danger" role="alert">
+        <h4 className="alert-heading">Error!</h4>
+        <p>{error}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="container mt-4">
       <h2>Users</h2>
+      <div className="mb-3">
+        <span className="badge bg-info">Total Users: {users.length}</span>
+      </div>
       <div className="table-responsive">
-        <table className="table table-striped">
+        <table className="table table-striped table-hover">
           <thead>
             <tr>
-              <th>Username</th>
-              <th>Email</th>
-              <th>Team</th>
-              <th>Joined</th>
+              <th scope="col">Username</th>
+              <th scope="col">Email</th>
+              <th scope="col">Team</th>
+              <th scope="col">Joined</th>
             </tr>
           </thead>
           <tbody>
             {users.map((user) => (
               <tr key={user.id}>
-                <td>{user.username}</td>
+                <td>
+                  <strong>{user.username}</strong>
+                </td>
                 <td>{user.email}</td>
-                <td>{user.team_name || user.team || 'No team'}</td>
+                <td>
+                  {user.team_name || user.team ? (
+                    <span className="badge bg-primary">{user.team_name || user.team}</span>
+                  ) : (
+                    <span className="badge bg-secondary">No team</span>
+                  )}
+                </td>
                 <td>{new Date(user.date_joined).toLocaleDateString()}</td>
               </tr>
             ))}

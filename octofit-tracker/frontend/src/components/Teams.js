@@ -30,24 +30,44 @@ function Teams() {
       });
   }, []);
 
-  if (loading) return <div className="container mt-4"><p>Loading teams...</p></div>;
-  if (error) return <div className="container mt-4"><p>Error: {error}</p></div>;
+  if (loading) return (
+    <div className="container mt-4">
+      <div className="loading-spinner">
+        <div className="spinner-border text-primary" role="status">
+          <span className="visually-hidden">Loading...</span>
+        </div>
+        <p className="mt-3">Loading teams...</p>
+      </div>
+    </div>
+  );
+  
+  if (error) return (
+    <div className="container mt-4">
+      <div className="alert alert-danger" role="alert">
+        <h4 className="alert-heading">Error!</h4>
+        <p>{error}</p>
+      </div>
+    </div>
+  );
 
   return (
     <div className="container mt-4">
       <h2>Teams</h2>
+      <div className="mb-3">
+        <span className="badge bg-primary">Total Teams: {teams.length}</span>
+      </div>
       <div className="row">
         {teams.map((team) => (
-          <div key={team.id} className="col-md-4 mb-3">
-            <div className="card">
+          <div key={team.id} className="col-md-4 mb-4">
+            <div className="card h-100">
               <div className="card-body">
-                <h5 className="card-title">{team.name}</h5>
+                <h5 className="card-title">👥 {team.name}</h5>
                 <p className="card-text">{team.description}</p>
-                <p className="card-text">
-                  <small className="text-muted">
-                    Created: {new Date(team.created_at).toLocaleDateString()}
-                  </small>
-                </p>
+              </div>
+              <div className="card-footer bg-transparent border-0">
+                <small className="text-muted">
+                  <i className="bi bi-calendar"></i> Created: {new Date(team.created_at).toLocaleDateString()}
+                </small>
               </div>
             </div>
           </div>

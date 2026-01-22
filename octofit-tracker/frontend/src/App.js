@@ -6,6 +6,7 @@ import Leaderboard from './components/Leaderboard';
 import Teams from './components/Teams';
 import Users from './components/Users';
 import Workouts from './components/Workouts';
+import logo from './logo.png';
 
 function App() {
   return (
@@ -13,7 +14,10 @@ function App() {
       <div className="App">
         <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
           <div className="container-fluid">
-            <Link className="navbar-brand" to="/">OctoFit Tracker</Link>
+            <Link className="navbar-brand" to="/">
+              <img src={logo} alt="OctoFit Logo" className="navbar-logo" />
+              OctoFit Tracker
+            </Link>
             <button 
               className="navbar-toggler" 
               type="button" 
@@ -50,8 +54,39 @@ function App() {
         <Routes>
           <Route path="/" element={
             <div className="container mt-4">
-              <h1>Welcome to OctoFit Tracker</h1>
-              <p className="lead">Track your fitness activities, compete with your team, and achieve your goals!</p>
+              <div className="home-hero">
+                <h1>Welcome to OctoFit Tracker</h1>
+                <p className="lead">Track your fitness activities, compete with your team, and achieve your goals!</p>
+              </div>
+              <div className="row">
+                <div className="col-md-4 mb-3">
+                  <div className="card text-center">
+                    <div className="card-body">
+                      <h5 className="card-title">📊 Track Activities</h5>
+                      <p className="card-text">Log your workouts and monitor your progress over time.</p>
+                      <Link to="/activities" className="btn btn-primary">View Activities</Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <div className="card text-center">
+                    <div className="card-body">
+                      <h5 className="card-title">👥 Join Teams</h5>
+                      <p className="card-text">Connect with others and compete in friendly challenges.</p>
+                      <Link to="/teams" className="btn btn-primary">View Teams</Link>
+                    </div>
+                  </div>
+                </div>
+                <div className="col-md-4 mb-3">
+                  <div className="card text-center">
+                    <div className="card-body">
+                      <h5 className="card-title">🏆 Compete</h5>
+                      <p className="card-text">Check the leaderboard and see how you rank.</p>
+                      <Link to="/leaderboard" className="btn btn-primary">View Leaderboard</Link>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           } />
           <Route path="/users" element={<Users />} />
