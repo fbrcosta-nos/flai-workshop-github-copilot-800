@@ -1,0 +1,71 @@
+from rest_framework import viewsets
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+from rest_framework.reverse import reverse
+from .models import User, Team, Activity, Leaderboard, Workout
+from .serializers import (
+    UserSerializer,
+    TeamSerializer,
+    ActivitySerializer,
+    LeaderboardSerializer,
+    WorkoutSerializer
+)
+
+
+@api_view(['GET'])
+def api_root(request, format=None):
+    """
+    API root endpoint that lists all available endpoints.
+    """
+    return Response({
+        'users': reverse('user-list', request=request, format=format),
+        'teams': reverse('team-list', request=request, format=format),
+        'activities': reverse('activity-list', request=request, format=format),
+        'leaderboard': reverse('leaderboard-list', request=request, format=format),
+        'workouts': reverse('workout-list', request=request, format=format),
+    })
+
+
+class UserViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing users.
+    Provides CRUD operations for user profiles.
+    """
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+
+class TeamViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing teams.
+    Provides CRUD operations for team management.
+    """
+    queryset = Team.objects.all()
+    serializer_class = TeamSerializer
+
+
+class ActivityViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing activities.
+    Provides CRUD operations for activity logging and tracking.
+    """
+    queryset = Activity.objects.all()
+    serializer_class = ActivitySerializer
+
+
+class LeaderboardViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing leaderboard.
+    Provides CRUD operations for competitive rankings.
+    """
+    queryset = Leaderboard.objects.all().order_by('rank')
+    serializer_class = LeaderboardSerializer
+
+
+class WorkoutViewSet(viewsets.ModelViewSet):
+    """
+    ViewSet for managing workout suggestions.
+    Provides CRUD operations for personalized workout recommendations.
+    """
+    queryset = Workout.objects.all()
+    serializer_class = WorkoutSerializer
